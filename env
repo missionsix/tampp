@@ -1,0 +1,4 @@
+#!/usr/bin/env
+
+export GOROOT=~/go/
+export PATH=$PATH:$GOROOT/bin
