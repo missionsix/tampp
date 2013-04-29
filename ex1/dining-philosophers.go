@@ -125,11 +125,6 @@ func main() {
 		}()
 	}
 
+	// wait for SIGINT
 	<- done
-
-	//mutex.Lock()
-	
 }
-
-
-
