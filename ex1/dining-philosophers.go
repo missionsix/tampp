@@ -14,6 +14,7 @@ import (
 	"sync/atomic"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 	"unsafe"
@@ -44,16 +45,25 @@ func (c *Chopstick) Return(n *int) bool {
 
 func main() {
 
+	// grab Args without prog name
+	args := os.Args[1:]
+	if len(args) != 1 {
+		fmt.Println("Usage: ./%s <num resources>", os.Args[0])
+		os.Exit(1)
+	}
+
+	num_philosophers, err := strconv.Atoi(args[0])
+	if (err != nil) {
+		fmt.Println("Usage: ./%s <num resources>", os.Args[0])
+		os.Exit(1)
+	}
+
 	sigs := make(chan os.Signal, 1)
 	done := make(chan bool)
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
-	num_philosophers  := 5
-	var i int
-
 	fmt.Println("Starting...")
-
 	// simple signal handler goroutine
 	go func() {
 		fmt.Println("Sig handler launched")
@@ -85,13 +95,11 @@ func main() {
 		}
 	}()
 
-	// get number of philosophers @ table
-	// _, err = fmt.Scanf("%d"
 	n_chops := (num_philosophers)
 	chopsticks := make([]Chopstick, n_chops)
 
 	// Philosopher go routine
-	for i = 0; i < num_philosophers; i++ {
+	for i := 0; i < num_philosophers; i++ {
 		var n int = i
 		go func() {
 
