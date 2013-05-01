@@ -19,7 +19,7 @@ type Semaphore chan empty
 
 // P is the wait construct
 // change n to consume n resources
-func (s Sempahore) P(n int) {
+func (s Semaphore) P(n int) {
 	e := empty{}
 	for i := 0; i < n; i++ {
 		s <- e
@@ -28,7 +28,7 @@ func (s Sempahore) P(n int) {
 
 // V is the signal construct of the Semaphore
 // signal n resources at a time
-func (s Sempahore) V(n int) {
+func (s Semaphore) V(n int) {
 	for i := 0; i < n; i++ {
 		<- s
 	}
