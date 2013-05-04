@@ -2,3 +2,4 @@
 
 export GOROOT=~/go/
 export PATH=$PATH:$GOROOT/bin
+export GOPATH=$(dirname $(readlink -f $0))
