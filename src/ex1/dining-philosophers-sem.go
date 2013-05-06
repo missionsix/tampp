@@ -19,8 +19,6 @@ import (
 	"semaphore"
 )
 
-/* signal-wait */
-
 type Chopstick struct {	
 	sem semaphore.Semaphore
 	owner *int
@@ -67,8 +65,7 @@ func main() {
 		sig := <- sigs //blocks on sigs
 		fmt.Println()
 		fmt.Println(sig)
-		done <- true
-		
+		done <- true		
 	}()
 
 	n_chops := (num_philosophers)
@@ -85,7 +82,6 @@ func main() {
 		var first int
 		var second int
 		go func() {
-
 			for ;; {
 				select {
 				case complete := <- done:
